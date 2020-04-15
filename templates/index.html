@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>DEMO</title>
+
+    <link rel="stylesheet" type="text/css" href="/static/style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+</head>
+<body>
+
+    <h1>Mid Semester Evaluation</h1>
+    <h3>Code here:- <a href="">Git Code</a></h3>
+    <div>
+      <div id="EMIMCahine">
+        <p class="user_output"><span>Hi! I'm Emotional Inteliigent Chatting Machine.</span></p>
+      </div>
+      <div id="data_input_user">
+        <input id="text_input_user" type="text" name="msg" placeholder="Message">
+        <input id="submit_btn" type="submit" value="Send">
+      </div>
+      <script>
+        function getBotResponse() {
+          var rawText = $("#text_input_user").val();
+          var userHtml = '<p class="user_input"><span>' + rawText + '</span></p>';
+          $("#text_input_user").val("");
+          $("#EMIMCahine").append(userHtml);
+          document.getElementById('data_input_user').scrollIntoView({block: 'start', behavior: 'smooth'});
+          $.get("/get", { msg: rawText }).done(function(data) {
+            var botHtml = '<p class="user_output"><span>'+data+'</span></p>';
+            $("#EMIMCahine").append(botHtml);
+            document.getElementById('data_input_user').scrollIntoView({block: 'start', behavior: 'smooth'});
+          });
+        }
+        $("#text_input_user").keypress(function(e) {
+            if(e.which == 13) {
+                getBotResponse();
+            }
+        });
+        $("#submit_btn").click(function() {
+          getBotResponse();
+        })
+      </script>
+    </div>
+
+
+</body>
+</html>
